@@ -21,14 +21,14 @@ const App = () => {
   const [serachTerm, setserachTerm] = useState("");
 
   useEffect(() => {
-    // searchMovies("Spiderman");
+    searchMovies("Spiderman");
   }, []);
 
   const searchMovies = async (title) => {
     const response = await fetch(`${API_URL}&s=${title}`);
     const data = await response.json();
     console.log(data.Search);
-    searchMovies(data.Search);
+    setMovies(data.Search);
   };
 
   return (
@@ -37,10 +37,14 @@ const App = () => {
       <div className="search">
         <input
           placeholder="Search for movies..."
-          value="Superman"
-          onChange={() => {}}
+          value={serachTerm}
+          onChange={(e) => setserachTerm(e.target.value)}
         />
-        <img src={SearchIcon} alt="Search" onClick={() => {}} />
+        <img
+          src={SearchIcon}
+          alt="Search"
+          onClick={() => searchMovies(serachTerm)}
+        />
       </div>
       {movies?.length > 0 ? (
         <div className="container">
